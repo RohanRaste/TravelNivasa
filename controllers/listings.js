@@ -1,4 +1,5 @@
 const Listing = require("../models/listing.js");
+const { formatDate, getNightCount } = require("../utils/bookingUtils.js");
 
 const filterOptions = [
     { id: "all", label: "All", icon: "fa-solid fa-compass" },
@@ -47,16 +48,35 @@ module.exports.renderNewForm = (req, res) => {
 
 module.exports.showListing = async (req, res) => {
     let { id } = req.params;
-    const listing = await Listing.findById(id).populate({
-        path: "reviews",
-        select: "rating comment author",
-        populate: {
-        path: "author",
-        select: "username email",
-        },
+    const todayDateValue = new Date().toISOString().split("T")[0];
+    const listing = await Listing.findById(id)
+        .populate({
+            path: "reviews",
+            select: "rating comment author",
+            populate: {
+                path: "author",
+                select: "username email",
+            },
         })
-        .populate("owner", "username email");
-    res.render("listings/show.ejs", { listing });
+        .populate("owner", "username email")
+        .populate({
+            path: "bookings",
+            match: { status: "confirmed" },
+            options: { sort: { checkIn: 1 } },
+            populate: {
+                path: "guest",
+                select: "username email",
+            },
+        });
+
+    const bookingSlots = listing.bookings.map((booking) => ({
+        ...booking.toObject(),
+        formattedCheckIn: formatDate(booking.checkIn),
+        formattedCheckOut: formatDate(booking.checkOut),
+        totalNights: getNightCount(booking.checkIn, booking.checkOut),
+    }));
+
+    res.render("listings/show.ejs", { listing, bookingSlots, todayDateValue });
 };
 
 module.exports.createListing = async (req, res) => {

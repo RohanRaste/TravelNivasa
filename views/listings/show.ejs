@@ -28,6 +28,113 @@
 </div>
 
 <div class="row mt-4">
+    <div class="col-lg-8 offset-lg-2">
+        <div class="booking-panel">
+            <div class="booking-panel-head">
+                <div>
+                    <h4 class="mb-1">Book this HomeNook</h4>
+                    <p class="booking-subtle mb-0">Choose your stay dates and we will block the slot instantly.</p>
+                </div>
+                <div class="booking-price-box">
+                    <span class="booking-rate">&#8377;<%= listing.price.toLocaleString("en-IN") %></span>
+                    <span class="booking-subtle">per night</span>
+                </div>
+            </div>
+
+            <div class="row g-4 align-items-start">
+                <div class="col-lg-6">
+                    <% if (!currUser) { %>
+                        <div class="booking-note-box">
+                            <p class="mb-2">Log in to reserve this HomeNook and lock your stay dates.</p>
+                            <a href="/login" class="btn add-btn btn-sm">Log In to Book</a>
+                        </div>
+                    <% } else if (listing.owner && listing.owner._id.equals(currUser._id)) { %>
+                        <div class="booking-note-box">
+                            <p class="mb-0">You are the host of this HomeNook, so booking is disabled for your own account.</p>
+                        </div>
+                    <% } else { %>
+                        <form method="post" action="/listings/<%= listing._id %>/bookings" class="needs-validation booking-form" novalidate>
+                            <div class="row g-2">
+                                <div class="col-md-6">
+                                    <label for="checkIn" class="form-label">Check-in</label>
+                                    <input type="date" id="checkIn" name="booking[checkIn]" class="form-control" min="<%= todayDateValue %>" required>
+                                    <div class="invalid-feedback">Select a check-in date.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="checkOut" class="form-label">Check-out</label>
+                                    <input type="date" id="checkOut" name="booking[checkOut]" class="form-control" min="<%= todayDateValue %>" required>
+                                    <div class="invalid-feedback">Select a check-out date.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="guests" class="form-label">Guests</label>
+                                    <input type="number" id="guests" name="booking[guests]" class="form-control" min="1" max="10" value="1" required>
+                                    <div class="invalid-feedback">Choose at least 1 guest.</div>
+                                </div>
+                            </div>
+                            <button class="btn add-btn mt-3">Reserve HomeNook</button>
+                        </form>
+                    <% } %>
+                </div>
+
+                <div class="col-lg-6">
+                    <h5 class="mb-2">Unavailable Slots</h5>
+                    <% if (bookingSlots.length) { %>
+                        <div class="booking-slot-list">
+                            <% for (let booking of bookingSlots) { %>
+                                <div class="booking-slot-card">
+                                    <div class="booking-slot-row">
+                                        <strong><%= booking.formattedCheckIn %></strong>
+                                        <span>to</span>
+                                        <strong><%= booking.formattedCheckOut %></strong>
+                                    </div>
+                                    <p class="booking-subtle mb-1"><%= booking.totalNights %> night<%= booking.totalNights > 1 ? "s" : "" %> blocked</p>
+                                    <% if (booking.guest) { %>
+                                        <% if (currUser && booking.guest._id.equals(currUser._id)) { %>
+                                            <p class="booking-subtle mb-0">Booked by <strong>You</strong></p>
+                                        <% } else { %>
+                                            <p class="booking-subtle mb-0">Booked by <strong>Guest</strong></p>
+                                        <% } %>
+                                    <% } %>
+                                </div>
+                            <% } %>
+                        </div>
+                    <% } else { %>
+                        <p class="text-muted mb-0">No bookings yet. All upcoming slots are currently open.</p>
+                    <% } %>
+                </div>
+            </div>
+
+            <% if (currUser) { %>
+                <% const myBookings = bookingSlots.filter((booking) => booking.guest && booking.guest._id.equals(currUser._id)); %>
+                <div class="mt-4">
+                    <h5 class="mb-2">Your Bookings</h5>
+                    <% if (myBookings.length) { %>
+                        <div class="booking-slot-list">
+                            <% for (let booking of myBookings) { %>
+                                <div class="booking-slot-card">
+                                    <div class="booking-slot-row">
+                                        <strong><%= booking.formattedCheckIn %></strong>
+                                        <span>to</span>
+                                        <strong><%= booking.formattedCheckOut %></strong>
+                                    </div>
+                                    <p class="booking-subtle mb-1"><%= booking.guests %> guest<%= booking.guests > 1 ? "s" : "" %> | <%= booking.totalNights %> night<%= booking.totalNights > 1 ? "s" : "" %></p>
+                                    <p class="mb-2">Total: &#8377;<%= booking.totalPrice.toLocaleString("en-IN") %></p>
+                                    <form method="post" action="/listings/<%= listing._id %>/bookings/<%= booking._id %>?_method=DELETE">
+                                        <button class="btn btn-sm btn-dark">Cancel Booking</button>
+                                    </form>
+                                </div>
+                            <% } %>
+                        </div>
+                    <% } else { %>
+                        <p class="text-muted mb-0">You have not booked this HomeNook yet.</p>
+                    <% } %>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
     <div class="col-md-5 offset-md-0 col-lg-4 offset-lg-2">
         <div class="review-form-box">
         <h4 class="mb-2">Leave a Review</h4>

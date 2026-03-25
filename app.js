@@ -16,6 +16,7 @@
     const User = require("./models/user.js");
     const listingRouter = require("./routes/listings.js");
     const reviewRouter = require("./routes/reviews.js");
+    const bookingRouter = require("./routes/bookings.js");
     const userRouter = require("./routes/user.js");
     const { saveRedirectUrl } = require("./middleware.js");
     const dbUrl = process.env.ATLASDB_URL || "mongodb://127.0.0.1:27017/Nivasa";
@@ -86,6 +87,7 @@
 
     app.use("/listings", listingRouter);
     app.use("/listings/:id/reviews", reviewRouter);
+    app.use("/listings/:id/bookings", bookingRouter);
     app.use(saveRedirectUrl);
     app.use("/", userRouter);
 
