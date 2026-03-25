@@ -1,0 +1,95 @@
+<% layout("layouts/boilerplate.ejs") %>
+<div class="row">
+<div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+<h2 class="mb-3">Edit Your HomeNook</h2>
+<form method="post" action="/listings/<%= listing._id %>?_method=PUT" class="listing-form needs-validation" novalidate>
+    <div class="mb-2">
+        <label for="title" class="form-label">Title</label>
+        <input
+            id="title"
+            name="listing[title]"
+            value="<%= listing.title %>"
+            placeholder="Enter Catchy title"
+            type="text"
+            class="form-control"
+            required
+        />
+        <div class="valid-feedback">Title looks good.</div>
+        <div class="invalid-feedback">Please enter a title.</div>
+    </div>
+    <div class="mb-2">
+        <label for="description" class="form-label">Description</label>
+        <textarea
+            id="description"
+            name="listing[description]"
+            placeholder="Enter description"
+            class="form-control"
+            rows="3"
+            required
+        ><%= listing.description %></textarea>
+        <div class="valid-feedback">Description looks good.</div>
+        <div class="invalid-feedback">Please enter a description.</div>
+    </div>
+    <div class="mb-2">
+        <label for="image" class="form-label">Image URL</label>
+        <input
+            id="image"
+            name="listing[image][url]"
+            value="<%= listing.image.url %>"
+            placeholder="Enter image URL"
+            type="text"
+            class="form-control"
+            required
+        />
+        <div class="valid-feedback">Image URL looks good.</div>
+        <div class="invalid-feedback">Please enter an image URL.</div>
+    </div>
+    <div class="row">
+    <div class="mb-2 col-md-4">
+        <label for="price" class="form-label">Price</label>
+        <input
+            id="price"
+            name="listing[price]"
+            value="<%= listing.price %>"
+            placeholder="eg : 1000"
+            type="number"
+            min="1"
+            class="form-control"
+            required
+        />
+        <div class="valid-feedback">Price looks good.</div>
+        <div class="invalid-feedback">Please enter a price greater than 0.</div>
+    </div>
+      <div class="mb-2 col-md-8">
+        <label for="country" class="form-label">Country</label>
+        <input
+            id="country"
+            name="listing[country]"
+            value="<%= listing.country %>"
+            placeholder="Eg : india"
+            class="form-control"
+            required
+        />
+        <div class="valid-feedback">Country looks good.</div>
+        <div class="invalid-feedback">Please enter a country.</div>
+    </div>
+    </div>
+    <div class="mb-2">
+        <label for="location" class="form-label">Location</label>
+        <input
+            id="location"
+            name="listing[location]"
+            value="<%= listing.location %>"
+            placeholder="Enter location"
+            type="text"
+            class="form-control"
+            required
+        />
+        <div class="valid-feedback">Location looks good.</div>
+        <div class="invalid-feedback">Please enter a location.</div>
+    </div>
+    <button class="btn add-btn mt-2">Update HomeNook</button>
+  
+</form>
+</div>
+</div>

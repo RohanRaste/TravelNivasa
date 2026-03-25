@@ -1,0 +1,122 @@
+<% layout("layouts/boilerplate.ejs") %>
+
+<section class="home-hero">
+    <div class="home-hero-copy">
+        <h1 class="home-kicker">Travel Nivasa</h1>
+        <h1>Find stays that feel less like hotels and more like stories worth remembering.</h1>
+        <p class="home-lead">
+            Explore a full-stack vacation rental platform built for discovering stays, sharing reviews,
+            and managing HomeNooks with real authentication and ownership controls.
+        </p>
+        <div class="home-cta">
+            <a href="/listings" class="btn add-btn">Explore HomeNooks</a>
+            <% if (!currUser) { %>
+            <a href="/signup" class="btn btn-outline-dark">Create Account</a>
+            <% } else { %>
+            <a href="/listings/new" class="btn btn-outline-dark">Host a Place</a>
+            <% } %>
+        </div>
+    </div>
+
+    <div id="homeCarousel" class="carousel slide home-carousel" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1400&q=80" class="d-block w-100 home-carousel-img" alt="Mountain stay">
+                <div class="carousel-caption home-caption">
+                <span>Aspen</span>
+                <h3>Mountain escapes with crisp air and wide-open views</h3>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1602343168117-bb8ffe3e2e9f?auto=format&fit=crop&w=1400&q=80" class="d-block w-100 home-carousel-img" alt="Beach villa">
+                <div class="carousel-caption home-caption">
+                <span>Mykonos</span>
+                <h3>Sea-facing villas made for slow mornings and long sunsets</h3>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1480796927426-f609979314bd?auto=format&fit=crop&w=1400&q=80" class="d-block w-100 home-carousel-img" alt="City apartment">
+                <div class="carousel-caption home-caption">
+                <span>Tokyo</span>
+                <h3>Urban stays close to the energy of the city</h3>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#homeCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#homeCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+
+<section class="home-features">
+    <div class="home-section-head">
+        <p class="home-kicker">Why This Project Matters</p>
+        <h2>A polished full-stack stay platform, not just a basic CRUD demo.</h2>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="feature-card">
+            <span class="feature-icon"><i class="fa-solid fa-map-location-dot"></i></span>
+            <h3>Discovery Driven</h3>
+            <p>Browse destination-focused HomeNooks with visual cards, detailed pages, and owner information.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+            <span class="feature-icon"><i class="fa-solid fa-user-shield"></i></span>
+            <h3>Protected Actions</h3>
+            <p>Authentication, ownership checks, flash messages, and server-side validation keep the flow realistic.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+            <span class="feature-icon"><i class="fa-solid fa-star"></i></span>
+            <h3>Review System</h3>
+            <p>Users can post reviews, see authors, and manage only the content they actually own.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="home-destinations">
+    <div class="home-section-head">
+        <p class="home-kicker">Featured Places</p>
+        <h2>From beaches to mountain hideaways, there is a mood for every trip.</h2>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="destination-card">
+                <img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?auto=format&fit=crop&w=900&q=80" alt="Beachfront cottage">
+                <div class="destination-copy">
+                <h3>Coastal Retreats</h3>
+                <p>Light, open, and designed for weekends where the ocean does the planning.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="destination-card">
+                <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=900&q=80" alt="Mountain retreat">
+                <div class="destination-copy">
+                <h3>Mountain Retreats</h3>
+                <p>Quiet cabins and alpine stays with cozy interiors and dramatic views.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="destination-card">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80" alt="Historic villa">
+                <div class="destination-copy">
+                <h3>Historic Stays</h3>
+                <p>Character-filled homes where architecture becomes part of the travel experience.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
